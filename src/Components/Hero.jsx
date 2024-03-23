@@ -6,7 +6,7 @@ const Hero = () => {
       <div className="hero-content text-center">
         <div className="max-w-xl">
           <h1 className="text-5xl font-bold">
-            Welcome to <span>ByteBlaze</span>
+            Welcome to <span className="bg-gradient-to-r from-orange-700 via-blue-500 to-green-400 text-transparent bg-clip-text animate-gradient bg-300%">ByteBlaze</span>
           </h1>
           <p className="py-6">
             ByteBlaze is the bridge between the complex world of technology and
