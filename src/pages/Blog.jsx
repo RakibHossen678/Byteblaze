@@ -1,16 +1,23 @@
 import { useState } from "react";
-import { Link, useLoaderData ,Outlet} from "react-router-dom";
+import { Link, useLoaderData, Outlet, useNavigation } from "react-router-dom";
+import { MdBookmarkAdd } from "react-icons/md";
+import Loader from "../Components/Loader";
+import { saveBlog } from "../utility/localstorage";
 const Blog = () => {
   const blog = useLoaderData();
-  const [tabIndex,setTabIndex]=useState(0)
+  const [tabIndex, setTabIndex] = useState(0);
+  const navigation = useNavigation();
   const {
     reading_time_minutes,
     title,
     public_reactions_count,
     published_at,
-    user,
-    tags
+    user
   } = blog;
+  const handleBookmark=(blog)=>{
+    saveBlog(blog)
+  }
+  if (navigation.state === "loading") return <Loader></Loader>;
   return (
     <div className="max-w-3xl px-6 py-16 mx-auto space-y-12">
       <article className="space-y-8  ">
@@ -29,11 +36,12 @@ const Blog = () => {
             </p>
           </div>
           <div className="flex items-center -mx-4 overflow-x-auto overflow-y-hidden  flex-nowrap ">
-            <Link 
-            to=''
-            onClick={()=>setTabIndex(0)}
-              
-            className={`flex items-center flex-shrink-0 px-5 py-3 space-x-2 ${tabIndex===0 ? 'border border-b-0' : 'border-b'} rounded-t-lg border-gray-400`}
+            <Link
+              to=""
+              onClick={() => setTabIndex(0)}
+              className={`flex items-center flex-shrink-0 px-5 py-3 space-x-2 ${
+                tabIndex === 0 ? "border border-b-0" : "border-b"
+              } rounded-t-lg border-gray-400`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -50,10 +58,11 @@ const Blog = () => {
               <span>Content</span>
             </Link>
             <Link
-             to={`author`}
-             onClick={()=>setTabIndex(1)}
-              
-              className={`flex items-center flex-shrink-0 px-5 py-3 space-x-2 ${tabIndex===1 ? 'border border-b-0' : 'border-b'} rounded-t-lg border-gray-400`}
+              to={`author`}
+              onClick={() => setTabIndex(1)}
+              className={`flex items-center flex-shrink-0 px-5 py-3 space-x-2 ${
+                tabIndex === 1 ? "border border-b-0" : "border-b"
+              } rounded-t-lg border-gray-400`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -69,12 +78,16 @@ const Blog = () => {
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
               </svg>
               <span>Author</span>
-            </Link>            
+            </Link>
+            <div
+            onClick={()=>handleBookmark(blog)}
+             className="bg-primary p-3 ml-5 rounded-full hover:bg-opacity-30 bg-opacity-20 cursor-pointer hover:scale-105 overflow-hidden">
+              <MdBookmarkAdd className="text-2xl text-secondary" />
+            </div>
           </div>
         </div>
         <Outlet></Outlet>
       </article>
-      
     </div>
   );
 };
