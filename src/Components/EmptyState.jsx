@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const EmptyState = ({message,address,lable}) => {
     return (
-        <div className="h-screen gap-5 flex flex-col justify-center items-center pb-16">
-            <p>{message}</p>
+        <div className="min-h-[calc(100vh-116px)] gap-5 flex flex-col justify-center items-center pb-16">
+            <p className="text-lg font-medium">{message}</p>
             <Link to={address}
               href="#_"
               className="relative inline-block px-4 py-2 font-medium group"
@@ -19,4 +20,9 @@ const EmptyState = ({message,address,lable}) => {
     );
 };
 
+EmptyState.propTypes={
+    message:PropTypes.string,
+    address:PropTypes.string,
+    lable:PropTypes.string,
+}
 export default EmptyState;
